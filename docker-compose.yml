@@ -1,0 +1,37 @@
+# Usage:
+#   docker compose run --rm app          # install dependencies and run the tests
+#   docker compose up demo               # try the package in a real Laravel app
+#
+# Copy .env.example to .env to override any of the variables below.
+services:
+  app:
+    build:
+      context: .
+      target: dev
+    working_dir: /package
+    volumes:
+      - .:/package
+      - composer-cache:/tmp/composer-cache
+
+  demo:
+    build:
+      context: .
+      target: demo
+    ports:
+      - "${DEMO_PORT:-8000}:8000"
+    volumes:
+      - .:/package
+      - composer-cache:/tmp/composer-cache
+    environment:
+      # "local" is Multipay's offline fake gateway, so the demo works without
+      # a bank account. Switch to "zarinpal" and set the merchant id to use a
+      # real (or sandbox) gateway.
+      PAYMENT_MODULE_GATEWAY: ${PAYMENT_MODULE_GATEWAY:-local}
+      # Guests can pay in the demo; production setups should keep this true.
+      PAYMENT_MODULE_REQUIRE_AUTH: ${PAYMENT_MODULE_REQUIRE_AUTH:-false}
+      ZARINPAL_MODE: ${ZARINPAL_MODE:-sandbox}
+      ZARINPAL_MERCHANT_ID: ${ZARINPAL_MERCHANT_ID:-}
+      ZARINPAL_CURRENCY: ${ZARINPAL_CURRENCY:-T}
+
+volumes:
+  composer-cache:

@@ -1,0 +1,50 @@
+{
+    "name": "shervintehrani/payment-module-laravel",
+    "description": "A small, opinionated Laravel package that stores payments and talks to Iranian payment gateways through Shetabit Multipay.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["laravel", "payment", "payment-gateway", "zarinpal", "shetabit", "multipay", "iran"],
+    "authors": [
+        {
+            "name": "shervintehrani",
+            "homepage": "https://github.com/shervintehrani"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "laravel/framework": "^10.0||^11.0||^12.0",
+        "shetabit/multipay": "^2.10"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.23",
+        "mockery/mockery": "^1.6",
+        "orchestra/testbench": "^8.0||^9.0||^10.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "PaymentModule\\": "src/",
+            "PaymentModule\\Database\\Factories\\": "database/factories/",
+            "PaymentModule\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PaymentModule\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "PaymentModule\\PaymentModuleServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
